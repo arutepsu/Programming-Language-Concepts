@@ -80,7 +80,7 @@ java org.antlr.v4.gui.TestRig MiniJSON json -tree example1.mj
 The resulting parse tree visualizes the full syntactic structure of the input
 according to the grammar. 
 An example parse tree:
-[parse-tree](miniJSON/antlr4_parse_tree.png)
+![parse-tree](miniJSON/antlr4_parse_tree.png)
 
 ---
 
