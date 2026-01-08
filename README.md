@@ -1,7 +1,8 @@
 # Programming Language Concepts (Sprachkonzepte)
 
 This repository contains solutions and implementations for the university course
-**Programming Language Concepts (Sprachkonzepte)**.
+**Programming Language Concepts (Sprachkonzepte)**  
+at **Konstanz University of Applied Sciences (HTWG Konstanz)**.
 
 Each task is organized in its own directory and documented with a dedicated
 `README.md` file. The structure is designed to be clean, reproducible, and
@@ -66,7 +67,5 @@ gradle clean build
 
 ---
 
-## Author
-
 Student work created as part of the course *Programming Language Concepts
-(Sprachkonzepte)*.
+(Sprachkonzepte)* at **HTWG Konstanz – Konstanz University of Applied Sciences**.
