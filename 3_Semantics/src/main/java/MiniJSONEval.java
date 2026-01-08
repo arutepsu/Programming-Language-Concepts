@@ -17,7 +17,6 @@ public class MiniJSONEval extends MiniJSONParserBaseVisitor<JValue> {
             return new JValue.JString(unquote(ctx.STRING().getText()));
         }
         if (ctx.NUMBER() != null) {
-            // NUMBER is syntactically checked by lexer; parsing to BigDecimal is the runtime meaning
             return new JValue.JNumber(new BigDecimal(ctx.NUMBER().getText()));
         }
         if (ctx.TRUE() != null) return new JValue.JBool(true);
@@ -46,8 +45,6 @@ public class MiniJSONEval extends MiniJSONParserBaseVisitor<JValue> {
             String key = unquote(p.STRING().getText());
             JValue val = visit(p.value());
 
-            // Dynamic semantics choice:
-            // if static semantics is enabled, duplicate keys should not appear here.
             map.put(key, val);
         }
 

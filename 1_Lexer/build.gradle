@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'antlr'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(24)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr "org.antlr:antlr4:4.13.1"
+    implementation "org.antlr:antlr4-runtime:4.13.1"
+}
+
+generateGrammarSource {
+    arguments += ['-listener']
+}
+
+application {
+    mainClass = 'DBTokenizer'
+}

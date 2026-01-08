@@ -87,7 +87,6 @@ public class MiniJSONTest {
         System.out.println("Dynamic semantics result (runtime value):");
         System.out.println(result);
 
-        // Optional: show parse tree
         // System.out.println(tree.toStringTree(parser));
         // org.antlr.v4.gui.Trees.inspect(tree, parser);
     }
