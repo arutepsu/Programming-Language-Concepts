@@ -1,0 +1,6 @@
+{
+  "name": "Alice",
+  "age": 23,
+  "skills": ["Java", "Scala", "ANTLR"],
+  "student": false
+}
