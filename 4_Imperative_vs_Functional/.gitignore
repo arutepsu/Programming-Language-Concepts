@@ -1,21 +1,16 @@
+# Java / Gradle
 .gradle/
 build/
-**/build/
+out/
 
 gradle-app.setting
-
-*.class
-hs_err_pid*
-
-**/generated-src/
-**/*.tokens
-**/*.interp
 
 .idea/
 *.iml
 *.ipr
 *.iws
-out/
+
+build/generated-src/
 
 .DS_Store
 Thumbs.db
@@ -23,7 +18,8 @@ ehthumbs.db
 Desktop.ini
 
 *.log
+
 *.tmp
 *.swp
 *.bak
-
+/inputs/
