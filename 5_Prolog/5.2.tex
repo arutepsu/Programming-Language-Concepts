@@ -1,0 +1,53 @@
+\section*{Aufgabe 5b -- Berechnung der Summe einer Liste in Prolog}
+
+In dieser Aufgabe wird ein Prolog-Pr\"adikat \texttt{sum/2} implementiert, das die
+Summe einer Liste von Zahlen berechnet. Die L\"osung verwendet Rekursion, wie in
+der Aufgabenstellung gefordert.
+
+\subsection*{Definition des Pr\"adikats}
+
+Das Pr\"adikat besteht aus einem Basisfall und einem Rekursionsfall.
+
+\bigskip
+
+\begin{verbatim}
+sum([], 0).
+sum([H|T], S) :-
+    sum(T, S1),
+    S is H + S1.
+\end{verbatim}
+
+\bigskip
+
+\subsection*{Erkl\"arung}
+
+\begin{itemize}
+  \item Der Basisfall legt fest, dass die Summe der leeren Liste \texttt{0} ist.
+  \item Im Rekursionsfall wird die Summe berechnet, indem das erste Element der
+        Liste zur Summe des restlichen Listenteils addiert wird.
+  \item Der Operator \texttt{is} dient zur Auswertung arithmetischer Ausdr\"ucke.
+\end{itemize}
+
+\subsection*{Beispielanfragen}
+
+\begin{verbatim}
+?- sum([1,2,3,4], S).
+S = 10.
+\end{verbatim}
+
+\begin{verbatim}
+?- sum([], S).
+S = 0.
+\end{verbatim}
+
+\begin{verbatim}
+?- sum([5], S).
+S = 5.
+\end{verbatim}
+
+\subsection*{Hinweise}
+
+Das Pr\"adikat \texttt{sum/2} ist nicht bidirektional, da arithmetische Berechnungen
+mit \texttt{is/2} nur mit instanziierten Operanden m\"oglich sind. Die Rekursion
+verarbeitet die Liste von links nach rechts und endet beim Erreichen der leeren
+Liste.

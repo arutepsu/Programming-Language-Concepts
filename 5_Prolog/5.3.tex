@@ -1,0 +1,76 @@
+\section*{Aufgabe 5c -- Bahnverbindungen (Rekursion mit Umsteigen)}
+
+Gegeben sind Zugverbindungen in Form von Fakten \texttt{zug/4}:
+\texttt{zug(From, Dep, To, Arr)}. Dabei sind die Zeiten im Format \texttt{HH.MM}
+notiert (z.\,B. \texttt{08.39} f\"ur 08:39 Uhr). Ziel ist ein Pr\"adikat
+\texttt{verbindung/4}, das pr\"uft, ob zwischen zwei St\"adten nach einer gegebenen
+Startzeit eine Verbindung existiert (inklusive Umsteigen). Beim Umsteigen muss
+gelten: \texttt{Abfahrtszeit > Ankunftszeit}.
+
+\subsection*{Faktenbasis}
+
+\begin{verbatim}
+zug(konstanz, 08.39, offenburg, 10.59).
+zug(konstanz, 08.39, karlsruhe, 11.49).
+zug(konstanz, 09.06, singen, 09.31).
+zug(singen,   09.36, stuttgart, 11.32).
+zug(offenburg,11.28, mannheim, 12.24).
+zug(karlsruhe,12.06, mainz,    13.47).
+zug(stuttgart,11.51, mannheim, 12.28).
+zug(mannheim, 12.39, mainz,    13.18).
+\end{verbatim}
+
+\subsection*{Implementierung von \texttt{verbindung/4}}
+
+Zur Zeitverarbeitung wird \texttt{HH.MM} in Minuten umgerechnet, indem die
+Nachkommastellen als Minuten interpretiert werden (z.\,B. \texttt{08.39} $\to$
+$8*60+39$).
+
+\begin{verbatim}
+% --- Zeitumrechnung: HH.MM -> Minuten seit 00:00 ---
+time_minutes(T, Minutes) :-
+    H is floor(T),
+    M is round((T - H) * 100),     % .39 -> 39 Minuten
+    Minutes is H * 60 + M.
+
+after_or_equal(T1, T2) :-
+    time_minutes(T1, M1),
+    time_minutes(T2, M2),
+    M1 >= M2.
+
+after_strict(T1, T2) :-
+    time_minutes(T1, M1),
+    time_minutes(T2, M2),
+    M1 > M2.
+
+% --- Verbindung: Reiseplan ist Liste von zug/4-Strukturen ---
+verbindung(From, StartAfter, To, Plan) :-
+    verbindung_(From, StartAfter, To, [From], Plan).
+
+% Direktverbindung: ein Zug reicht
+verbindung_(From, StartAfter, To, Visited, [zug(From,Dep,To,Arr)]) :-
+    zug(From, Dep, To, Arr),
+    after_or_equal(Dep, StartAfter),
+    \+ member(To, Visited).
+
+% Umsteigen: erster Zug zu einer Zwischenstation, danach weiter
+verbindung_(From, StartAfter, To, Visited, [zug(From,Dep,Mid,Arr)|Rest]) :-
+    zug(From, Dep, Mid, Arr),
+    after_or_equal(Dep, StartAfter),
+    \+ member(Mid, Visited),
+    verbindung_(Mid, Arr, To, [Mid|Visited], Rest),
+    % Umsteigenbedingung: naechste Abfahrt > vorherige Ankunft
+    Rest = [zug(Mid,Dep2,_,_)|_],
+    after_strict(Dep2, Arr).
+\end{verbatim}
+
+\subsection*{Beispielabfrage}
+
+\begin{verbatim}
+?- verbindung(konstanz, 8.00, mainz, Reiseplan).
+\end{verbatim}
+
+Die Abfrage liefert nacheinander alle m\"oglichen Reisepl\"ane nach 8 Uhr als
+Liste von Teilstrecken \texttt{zug(...)}. Die Reihenfolge der ausgegebenen
+L\"osungen ergibt sich aus der Tiefensuche von Prolog (links-nach-rechts) und
+Backtracking \"uber die \texttt{zug/4}-Fakten.

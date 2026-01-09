@@ -1,0 +1,140 @@
+\section*{Task 5a -- Prolog}
+
+This section presents the solutions for Task 5a based on the exercises from
+\textit{Eck-Prolog.pdf}. The focus lies on list matching, recursive definitions,
+and recursion over lists.
+
+\subsection*{Matching von Listen (Slide 25)}
+
+Beim Matching (Unifikation) von Listen werden Terme elementweise von links nach
+rechts verglichen. Variablen können instanziiert werden, Konstanten müssen exakt
+übereinstimmen.
+
+\bigskip
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Liste 1} & \textbf{Liste 2} & \textbf{Instanziierung} \\
+\hline
+$[X, Y, Z]$ &
+$[john, likes, fish]$ &
+$X = john,\; Y = likes,\; Z = fish$ \\
+\hline
+$[cat]$ &
+$[X|Y]$ &
+$X = cat,\; Y = []$ \\
+\hline
+$[X, Y | Z]$ &
+$[mary, likes, wine]$ &
+$X = mary,\; Y = likes,\; Z = [wine]$ \\
+\hline
+$[[the, Y] | Z]$ &
+$[[X, hare], [is, here]]$ &
+$X = the,\; Y = hare,\; Z = [[is, here]]$ \\
+\hline
+$[golden | T]$ &
+$[golden, norfolk]$ &
+$T = [norfolk]$ \\
+\hline
+$[white, horse]$ &
+$[horse, X]$ &
+keine Unifikation \\
+\hline
+$[white | Q]$ &
+$[P, horse]$ &
+$P = white,\; Q = [horse]$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Berechnung der Fakult\"at (Slide 26)}
+
+Die Fakult\"at wird in Prolog rekursiv durch einen Basisfall und einen
+Rekursionsfall definiert.
+
+\bigskip
+
+\begin{verbatim}
+fact(0, 1).
+fact(N, F) :-
+    N > 0,
+    N1 is N - 1,
+    fact(N1, F1),
+    F is N * F1.
+\end{verbatim}
+
+\bigskip
+
+Beispielanfrage:
+\begin{verbatim}
+?- fact(5, F).
+F = 120.
+\end{verbatim}
+
+Der Basisfall verhindert eine unendliche Rekursion, w\"ahrend der Rekursionsfall
+die Berechnung schrittweise reduziert.
+
+\subsection*{Rekursion bei Listen: append/3 (Slide 28)}
+
+Die Konkatenation zweier Listen wird in Prolog rekursiv mit dem Pr\"adikat
+\texttt{append/3} realisiert.
+
+\bigskip
+
+\begin{verbatim}
+append([], L, L).
+append([H|T1], L, [H|T2]) :-
+    append(T1, L, T2).
+\end{verbatim}
+
+\bigskip
+
+Beispiel:
+\begin{verbatim}
+?- append([1,2], [3], W).
+W = [1,2,3].
+\end{verbatim}
+
+\bigskip
+
+Die Rekursion wird durch folgende Unifikationsschritte aufgel\"ost:
+
+\begin{verbatim}
+append([1|[2]], [3], [1|T2])
+append([2|[]], [3], [2|T2])
+append([], [3], [3])
+\end{verbatim}
+
+\subsubsection*{Weitere Anfragen}
+
+\paragraph{Anfrage 1}
+\begin{verbatim}
+?- append(X, Y, [1,2,3,4]).
+\end{verbatim}
+
+Diese Anfrage berechnet alle m\"oglichen Zerlegungen der Liste
+\texttt{[1,2,3,4]} in zwei Teillisten:
+
+\begin{verbatim}
+X = [],           Y = [1,2,3,4] ;
+X = [1],          Y = [2,3,4] ;
+X = [1,2],        Y = [3,4] ;
+X = [1,2,3],      Y = [4] ;
+X = [1,2,3,4],    Y = [].
+\end{verbatim}
+
+\paragraph{Anfrage 2}
+\begin{verbatim}
+?- append(X, [1,2,3,4], Y).
+\end{verbatim}
+
+Diese Anfrage besitzt unendlich viele L\"osungen, da die Liste \texttt{X}
+beliebig lang sein kann:
+
+\begin{verbatim}
+X = [],        Y = [1,2,3,4] ;
+X = [_G1],     Y = [_G1,1,2,3,4] ;
+X = [_G1,_G2], Y = [_G1,_G2,1,2,3,4] ;
+...
+\end{verbatim}

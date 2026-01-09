@@ -1,0 +1,25 @@
+# Java / Gradle
+.gradle/
+build/
+out/
+
+gradle-app.setting
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+build/generated-src/
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+*.log
+
+*.tmp
+*.swp
+*.bak
+/inputs/

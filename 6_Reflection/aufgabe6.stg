@@ -1,0 +1,40 @@
+group aufgabe6;
+
+page(types) ::= <<
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<style type="text/css">
+th, td { border-bottom: thin solid; padding: 4px; text-align: left; }
+td { font-family: monospace }
+</style>
+</head>
+<body>
+<h1>Sprachkonzepte, Aufgabe 6</h1>
+$types:{t | $typeBlock(t)$}$
+</body>
+</html>
+>>
+
+typeBlock(t) ::= <<
+<h2>$t.kind$ $t.name$:</h2>
+<table>
+$if(t.isInterface)$
+<tr><th>Methods</th></tr>
+<tr><td>$t.methods:{m | $m$<br>
+}$</td></tr>
+$else$
+<tr><th>Interface</th><th>Methods</th></tr>
+$t.interfaces:{it | $interfaceRow(it)$}$
+$endif$
+</table>
+<br>
+>>
+
+interfaceRow(it) ::= <<
+<tr>
+<td valign=top>$it.name$</td>
+<td>$it.methods:{m | $m$<br>
+}$</td>
+</tr>
+>>
