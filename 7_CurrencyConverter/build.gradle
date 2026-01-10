@@ -1,0 +1,74 @@
+plugins {
+    id 'base'
+}
+
+def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+
+def pythonExe = isWindows ? "py" : "python"
+
+def venvDir = file("${buildDir}/venv")
+def venvPython = isWindows
+        ? file("${venvDir}/Scripts/python.exe").absolutePath
+        : file("${venvDir}/bin/python").absolutePath
+
+tasks.register("pythonVersion", Exec) {
+    description = "Print Python version (using system launcher)"
+    commandLine pythonExe, "--version"
+}
+
+tasks.register("createVenv", Exec) {
+    description = "Create Python virtual environment in build/venv"
+    dependsOn "pythonVersion"
+    commandLine pythonExe, "-m", "venv", venvDir.absolutePath
+    outputs.dir venvDir
+}
+
+tasks.register("installDeps", Exec) {
+    description = "Install Python dependencies into the venv"
+    dependsOn "createVenv"
+    commandLine venvPython, "-m", "pip", "install", "-r", "requirements.txt"
+}
+
+def requireProp(String name) {
+    def v = project.findProperty(name)
+    return v.toString().trim()
+}
+
+def getBase = { -> requireProp("base").toUpperCase() }
+def getQuote = { -> requireProp("quote").toUpperCase() }
+def getAmount = { -> requireProp("amount") }
+
+
+tasks.register("rate", Exec) {
+    description = "Get latest exchange rate (requires -Pbase=... -Pquote=...)"
+    dependsOn "installDeps"
+
+    doFirst {
+        def baseCcy = getBase()
+        def quoteCcy = getQuote()
+        commandLine venvPython, "currency_converter.py",
+                "rate",
+                "--base", baseCcy,
+                "--quote", quoteCcy
+    }
+}
+
+tasks.register("convert", Exec) {
+    description = "Convert currency amount (requires -Pbase=... -Pquote=... -Pamount=...)"
+    dependsOn "installDeps"
+
+    doFirst {
+        def baseCcy = getBase()
+        def quoteCcy = getQuote()
+        def amountVal = getAmount()
+        commandLine venvPython, "currency_converter.py",
+                "convert",
+                "--base", baseCcy,
+                "--quote", quoteCcy,
+                "--amount", amountVal
+    }
+}
+
+tasks.register("run") {
+    dependsOn "rate"
+}
