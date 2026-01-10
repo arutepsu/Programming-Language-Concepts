@@ -20,6 +20,7 @@ directly usable as a written report template.
 ---
 
 ### Task 2 – Language and Abstract Syntax
+📂[2_Language](/2_Language/)
 - Definition of a small custom language (*MiniJSON*)
 - Concrete syntax using ANTLR4 lexer and parser grammars
 - Abstract syntax defined using Java classes
@@ -28,6 +29,7 @@ directly usable as a written report template.
 ---
 
 ### Task 3 – Semantics
+📂[3_Semantics](/3_Semantics/)
 - Static semantics (e.g. detection of duplicate object keys)
 - Dynamic semantics (interpretation of MiniJSON programs)
 - Listener-based semantic checks and visitor-based evaluation
@@ -35,6 +37,7 @@ directly usable as a written report template.
 ---
 
 ### Task 4 – Imperative vs Functional Programming
+📂[4_Imperative_vs_Functional](/4_Imperative_vs_Functional/)
 - Comparison of imperative and functional programming paradigms
 - Analysis of control flow, state, and side effects
 - Implementation of equivalent algorithms in different paradigms
@@ -43,6 +46,7 @@ directly usable as a written report template.
 ---
 
 ### Task 5 – Logic Programming with Prolog
+📂[5_Prolog](/5_Prolog/)
 - Introduction to logic programming concepts
 - Definition of facts, rules, and recursive predicates
 - Query evaluation and backtracking
@@ -51,6 +55,7 @@ directly usable as a written report template.
 ---
 
 ### Task 6 – Reflection
+📂[6_Reflection](/6_Reflection/)
 - Use of Java Reflection to inspect classes and interfaces dynamically at runtime
 - Analysis of program structure without compile-time knowledge using Class.forName
 - Extraction of implemented interfaces and public method signatures
@@ -61,6 +66,7 @@ directly usable as a written report template.
 ---
 
 ### Task 7 – Scripting Languages (Python)
+📂[7_CurrencyConverter](/7_CurrencyConverter/)
 - Implementation of a small scripting-language application
 - Python-based command-line currency converter
 - Integration of an external REST API for exchange rates
