@@ -9,32 +9,10 @@ Each task is organized in its own directory and documented with a dedicated
 directly usable as a written report template.
 
 ---
-
-## Repository Structure
-
-programming-language-concepts/
-├─ 1_Lexer/
-│  └─ README.md        # Task 1: Lexer and tokenization
-├─ 2_Language/
-│  └─ README.md        # Task 2: Grammar and abstract syntax (AST)
-├─ 3_Semantics/
-│  └─ README.md        # Task 3: Static and dynamic semantics
-├─ 4_Imperative_vs_Functional/
-│ └─ README.md # Task 4: Paradigm comparison
-├─ 5_Prolog/
-│ └─ README.md # Task 5: Logic programming with Prolog
-├─ 6_Reflection/
-│ └─ README.md # Task 6: Reflection and meta-programming
-├─ 7_Currencyconverter/
-│ └─ README.md # Task 7: Scripting languages (Python)
-├─ .gitignore
-└─ README.md # This file
-
----
-
 ## Task Overview
 
 ### Task 1 – Lexer
+📂[1_Lexer](/1_Lexer/)
 - Definition of vocabularies using ANTLR4 lexer grammars
 - Tokenization of real-world text (DB departure board example)
 - Java-based tokenizer printing token sequences
@@ -73,10 +51,12 @@ programming-language-concepts/
 ---
 
 ### Task 6 – Reflection
-- Use of reflection to inspect classes, methods, and fields at runtime
-- Analysis of reflective capabilities in Java
-- Discussion of use cases, limitations, and risks
-- Comparison between compile-time and runtime program structure
+- Use of Java Reflection to inspect classes and interfaces dynamically at runtime
+- Analysis of program structure without compile-time knowledge using Class.forName
+- Extraction of implemented interfaces and public method signatures
+- Filtering of inherited methods to focus on relevant API information
+- Transformation of reflective information into structured HTML using StringTemplate
+- Clear separation between analysis logic, internal data model, and presentation
 
 ---
 
